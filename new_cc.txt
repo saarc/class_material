@@ -1,0 +1,12 @@
+cd ~/fabric-samples/basic-network
+./teardown.sh
+./start.sh
+docker-compose -f docker-compose.yml up -d cli
+docker exec -it cli bash
+
+peer chaincode install -n myfirst -v 1.0 -p github.com/sacc 
+peer chaincode instantiate -n myfirst -v 1.0 -C mychannel -c '{"Args":["a","100"]}' -P 'AND ("Org1MSP.member")'
+
+peer chaincode query -n myfirst -c '{"Args":["get","a"]}' -C mychannel
+peer chaincode invoke -n myfirst -c '{"Args":["set","b","200"]}' -C mychannel
+peer chaincode query -n myfirst -c '{"Args":["get","b"]}' -C mychannel
