@@ -10,3 +10,31 @@ peer chaincode instantiate -n myfirst -v 1.0 -C mychannel -c '{"Args":["a","100"
 peer chaincode query -n myfirst -c '{"Args":["get","a"]}' -C mychannel
 peer chaincode invoke -n myfirst -c '{"Args":["set","b","200"]}' -C mychannel
 peer chaincode query -n myfirst -c '{"Args":["get","b"]}' -C mychannel
+
+
+## --------------------------------------------------
+
+cd ~/fabric-samples/fabcar
+cp -r javascript ../basic-network
+cd ../basic-network/javascript
+
+#enrollAdmin.js 수정
+'..','..','basic-network','connection.json'
+-> '..','connection.json'
+#registerUser.js 수정
+'..','..','basic-network','connection.json'
+-> '..','connection.json'
+#query.js 수정
+ 1   '..','..','basic-network','connection.json'
+     -> '..','connection.json'
+ 2   getContract('fabcar')
+     ->getContract('myfirst')
+ 3   evaluateTransaction('queryAllCars')
+     evaluateTransaction('get','a')
+#invoke.js 수정
+1 '..','..','basic-network','connection.json'
+ ->'..','connection.json'
+2 getContract('fabcar')
+ ->getContract('myfirst')
+3 submitTransaction('createCars'......)
+  ->submitTransaction('set','b','200')
